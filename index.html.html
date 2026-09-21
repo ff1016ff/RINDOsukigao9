@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>RINDO 好き顔9選</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Noto Sans JP",sans-serif;background:#f7f7fa;color:#222}
+.wrap{max-width:680px;margin:auto;padding:22px 16px 40px}.brand{font-weight:900;letter-spacing:.08em;font-size:13px;color:#777}
+h1{font-size:30px;line-height:1.2;margin:8px 0}.sub{color:#777;font-size:14px;margin-bottom:20px}
+.card{background:#fff;border-radius:22px;padding:18px;box-shadow:0 6px 25px #0000000b;margin-bottom:14px}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.person{border:2px solid #eee;border-radius:16px;background:#fff;padding:12px 8px;text-align:center;min-height:120px;transition:.15s}
+.person.sel{border-color:#111;box-shadow:0 0 0 3px #1111;background:#fafafa}.avatar{width:68px;height:68px;border-radius:50%;margin:0 auto 8px;background:linear-gradient(135deg,#eee,#ddd);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:22px;color:#555}.name{font-weight:800;font-size:15px}
+button{border:0;border-radius:999px;padding:13px 20px;font-weight:800;font-size:15px;background:#111;color:white;width:100%}button.secondary{background:#eee;color:#222}.count{font-size:13px;color:#666;text-align:center;margin:12px 0}.hide{display:none}
+.progress{height:7px;background:#eee;border-radius:99px;overflow:hidden;margin:10px 0 18px}.bar{height:100%;background:#111;width:0}
+.choice{display:grid;grid-template-columns:1fr 1fr;gap:12px}.choice button{border:2px solid #eee;background:#fff;color:#222;border-radius:20px;padding:24px 10px;min-height:150px}.choice button:hover{border-color:#111}.rank{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid #eee}.rank:last-child{border-bottom:0}.num{font-size:24px;font-weight:900;width:38px}.mini{width:50px;height:50px;border-radius:50%;background:#eee;display:flex;align-items:center;justify-content:center;font-weight:900}.rankname{font-weight:800}.note{font-size:12px;color:#888;line-height:1.6}
+@media(max-width:430px){h1{font-size:27px}.choice button{min-height:130px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="brand">RINDO ENTERTAINMENT</div>
+<h1>好き顔9選</h1>
+<div id="app"></div>
+</div>
+<script>
+const NAMES=["なめ", "つばき", "うと", "ないち", "りう", "りんたろ。", "はく", "みお", "けん", "えつや", "ふゆみ", "かなめ", "あむ", "さく", "しょうた", "きょうへい", "らいと", "はやと", "とあ", "ねる", "うみ", "らん", "そう", "たく", "めあ", "ひろ", "てん", "さくら", "ゆそん", "たいよう", "はやて", "りょう", "さつき", "たろ", "こうた", "はも", "せな", "伊藤。", "けい", "こむぎ", "あゆむ", "はると", "みなと", "ゆうま", "ゆたか", "いぶき", "ふうま", "たいちん", "ひかる", "だいち", "あさひ", "こんちゃん", "みやび", "かい", "やまだ", "つかさ", "なお", "うた", "あとむ", "しき", "ひゅうが", "あらた", "りき", "じん", "うぃる", "つばさ", "なぎさ", "フマル", "りゅうせい", "あかね", "りお", "なつ", "禊", "タイ・マイ", "梅", "なつめ", "よきき", "りゅーと", "かぐや", "れお", "あさと", "しの", "そらん"];
+let state={screen:"intro",pool:[],round:0,queue:[],wins:{},result:[]};
+const app=document.getElementById("app");
+function esc(s){return s.replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]));}
+function avatar(name,mini=false){return `<div class="${mini?'mini':'avatar'}">${esc(name.slice(0,1))}</div>`}
+function shuffle(a){a=[...a];for(let i=a.length-1;i>0;i--){let j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function intro(){
+state.screen="intro";app.innerHTML=`<div class="card"><p><b>RINDOの中から「好きな顔」を9人選ぼう！</b></p><p class="note">予選では気になる人を何人選んでもOK。最低9人選ぶと本戦へ進めます。</p><button onclick="startSelect()">予選をはじめる</button></div>`;
+}
+function startSelect(){state.screen="select";state.pool=[];renderSelect(0);}
+function renderSelect(page){
+let start=page*10, list=NAMES.slice(start,start+10);
+app.innerHTML=`<div class="card"><div class="note">予選 ${page+1} / ${Math.ceil(NAMES.length/10)}</div><div class="grid">${list.map((n,i)=>`<div class="person ${state.pool.includes(n)?'sel':''}" onclick="toggle(${start+i})">${avatar(n)}<div class="name">${esc(n)}</div></div>`).join("")}</div><div class="count">現在 ${state.pool.length}人選択中</div>${start+10<NAMES.length?`<button onclick="renderSelect(${page+1})">次へ</button>`:`<button onclick="beginMain()">このメンバーで本戦へ</button>`}</div>`;
+}
+function toggle(i){let n=NAMES[i],k=state.pool.indexOf(n);k>=0?state.pool.splice(k,1):state.pool.push(n);renderSelect(Math.floor(i/10));}
+function beginMain(){
+if(state.pool.length<9){alert("9人以上選んでね！");return}
+state.wins={};state.pool.forEach(n=>state.wins[n]=0);
+let p=shuffle(state.pool), q=[];
+for(let r=0;r<3;r++){let a=shuffle(p);for(let i=0;i<a.length-1;i+=2)q.push([a[i],a[i+1]]);if(a.length%2)q.push([a[a.length-1],a[0]]);}
+state.queue=q;state.round=0;state.screen="main";renderMain();
+}
+function renderMain(){
+if(!state.queue.length)return finish();
+let pair=state.queue.shift(), done=state.round+1,total=state.round+1+state.queue.length;state.current=pair;state.round++;
+app.innerHTML=`<div class="card"><div class="note">本戦 ${done}回目</div><div class="progress"><div class="bar" style="width:${Math.min(100,done/total*100)}%"></div></div><p style="text-align:center;font-weight:800">どっちの顔が好き？</p><div class="choice">${pair.map(n=>`<button onclick="vote('${encodeURIComponent(n)}')">${avatar(n)}<br><b>${esc(n)}</b></button>`).join("")}</div></div>`;
+}
+function vote(x){let n=decodeURIComponent(x);state.wins[n]++;renderMain();}
+function finish(){
+state.result=Object.entries(state.wins).sort((a,b)=>b[1]-a[1]||Math.random()-.5).slice(0,9).map(x=>x[0]);
+state.screen="result";app.innerHTML=`<div class="card"><h2 style="margin-top:0">ふうかちゃんのTOP9</h2>${state.result.map((n,i)=>`<div class="rank"><div class="num">${i+1}</div>${avatar(n,true)}<div class="rankname">${esc(n)}</div></div>`).join("")}</div><div class="card"><button onclick="copyResult()">結果をコピー</button><br><br><button class="secondary" onclick="intro()">もう一度やる</button></div><p class="note">※現在は写真なしでも動作確認できるプロトタイプです。写真は後から追加できる形にしてあります。</p>`;
+}
+async function copyResult(){let t="RINDO 好き顔9選\\n"+state.result.map((n,i)=>`${i+1}. ${n}`).join("\\n");try{await navigator.clipboard.writeText(t);alert("コピーしたよ！")}catch(e){alert(t)}}
+intro();
+</script>
+</body>
+</html>
