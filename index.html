@@ -3,61 +3,194 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>RINDO 好き顔9選</title>
+<title>RINDO 好き顔9選メーカー</title>
 <style>
-*{box-sizing:border-box}body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Noto Sans JP",sans-serif;background:#f7f7fa;color:#222}
-.wrap{max-width:680px;margin:auto;padding:22px 16px 40px}.brand{font-weight:900;letter-spacing:.08em;font-size:13px;color:#777}
-h1{font-size:30px;line-height:1.2;margin:8px 0}.sub{color:#777;font-size:14px;margin-bottom:20px}
-.card{background:#fff;border-radius:22px;padding:18px;box-shadow:0 6px 25px #0000000b;margin-bottom:14px}
-.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.person{border:2px solid #eee;border-radius:16px;background:#fff;padding:12px 8px;text-align:center;min-height:120px;transition:.15s}
-.person.sel{border-color:#111;box-shadow:0 0 0 3px #1111;background:#fafafa}.avatar{width:68px;height:68px;border-radius:50%;margin:0 auto 8px;background:linear-gradient(135deg,#eee,#ddd);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:22px;color:#555}.name{font-weight:800;font-size:15px}
-button{border:0;border-radius:999px;padding:13px 20px;font-weight:800;font-size:15px;background:#111;color:white;width:100%}button.secondary{background:#eee;color:#222}.count{font-size:13px;color:#666;text-align:center;margin:12px 0}.hide{display:none}
-.progress{height:7px;background:#eee;border-radius:99px;overflow:hidden;margin:10px 0 18px}.bar{height:100%;background:#111;width:0}
-.choice{display:grid;grid-template-columns:1fr 1fr;gap:12px}.choice button{border:2px solid #eee;background:#fff;color:#222;border-radius:20px;padding:24px 10px;min-height:150px}.choice button:hover{border-color:#111}.rank{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid #eee}.rank:last-child{border-bottom:0}.num{font-size:24px;font-weight:900;width:38px}.mini{width:50px;height:50px;border-radius:50%;background:#eee;display:flex;align-items:center;justify-content:center;font-weight:900}.rankname{font-weight:800}.note{font-size:12px;color:#888;line-height:1.6}
-@media(max-width:430px){h1{font-size:27px}.choice button{min-height:130px}}
+:root{--pink:#ff5b9d;--pink2:#ff8db9;--bg:#fff7fb;--ink:#332b31;--muted:#887b84;--card:#fff;--line:#f0dce5}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Yu Gothic",Meiryo,sans-serif}
+button{font:inherit}
+.app{max-width:760px;margin:0 auto;min-height:100vh;padding:20px 14px 44px}
+.hero{text-align:center;padding:24px 8px 18px}
+.kicker{font-size:12px;letter-spacing:.22em;color:var(--pink);font-weight:800}
+h1{font-size:32px;line-height:1.15;margin:8px 0 10px}
+.hero p{margin:0 auto;max-width:560px;color:var(--muted);font-size:14px;line-height:1.8}
+.panel{background:rgba(255,255,255,.9);border:1px solid var(--line);border-radius:24px;padding:22px;box-shadow:0 10px 30px rgba(80,30,55,.06)}
+.startbtn,.nextbtn,.againbtn{border:0;border-radius:999px;padding:14px 24px;font-weight:800;background:var(--pink);color:white;box-shadow:0 7px 18px rgba(255,91,157,.25);cursor:pointer}
+.startbtn{margin-top:20px;font-size:16px}
+.secondary{background:white;color:var(--pink);border:1px solid #ffc2d8;box-shadow:none}
+.note{font-size:12px;color:var(--muted);line-height:1.7;margin-top:18px}
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:14px}
+.step{font-weight:800;color:var(--pink);font-size:13px}
+.counter{font-size:13px;color:var(--muted)}
+.progress{height:7px;background:#f4e4eb;border-radius:99px;overflow:hidden;margin-bottom:18px}
+.progress>i{display:block;height:100%;background:linear-gradient(90deg,var(--pink),var(--pink2));border-radius:99px;transition:.25s}
+h2{font-size:21px;margin:8px 0 5px}
+.sub{font-size:13px;color:var(--muted);margin:0 0 17px}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.card{position:relative;border:2px solid transparent;border-radius:18px;background:white;overflow:hidden;cursor:pointer;box-shadow:0 6px 18px rgba(70,25,50,.08);transition:.18s}
+.card.selected{border-color:var(--pink);transform:translateY(-2px);box-shadow:0 8px 22px rgba(255,91,157,.18)}
+.card img{display:block;width:100%;aspect-ratio:3/4;object-fit:cover;background:#eee}
+.card .name{padding:9px 8px 10px;text-align:center;font-weight:800;font-size:14px}
+.card .check{position:absolute;top:8px;right:8px;width:30px;height:30px;border-radius:50%;background:white;color:var(--pink);display:grid;place-items:center;font-weight:900;opacity:0;transform:scale(.7);transition:.18s;box-shadow:0 3px 10px rgba(0,0,0,.12)}
+.card.selected .check{opacity:1;transform:scale(1)}
+.actions{display:flex;justify-content:center;gap:10px;margin-top:18px;flex-wrap:wrap}
+.actions button:disabled{opacity:.4;cursor:not-allowed}
+.hidden{display:none!important}
+.finalgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.finalcard{background:white;border:1px solid var(--line);border-radius:16px;overflow:hidden;text-align:center}
+.finalcard img{width:100%;aspect-ratio:3/4;object-fit:cover;display:block}
+.rank{font-size:13px;color:var(--pink);font-weight:900;padding-top:7px}
+.finalname{font-weight:900;padding:4px 4px 10px;font-size:14px}
+.sharebox{margin-top:18px;text-align:center}
+.sharebtn{border:1px solid #ffc2d8;background:white;color:var(--pink);border-radius:999px;padding:11px 18px;font-weight:800;cursor:pointer}
+.small{font-size:11px;color:var(--muted);line-height:1.7}
+.battle{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.battle .card .name{font-size:15px;padding-bottom:12px}
+.badge{display:inline-block;background:#fff0f6;color:var(--pink);border-radius:999px;padding:5px 9px;font-size:11px;font-weight:800}
+.footer{text-align:center;color:#9b8e96;font-size:11px;line-height:1.7;margin-top:28px}
+@media(max-width:430px){h1{font-size:28px}.panel{padding:17px}.grid{gap:9px}.finalgrid{gap:8px}.finalname{font-size:12px}.card .name{font-size:13px}}
 </style>
 </head>
 <body>
-<div class="wrap">
-<div class="brand">RINDO ENTERTAINMENT</div>
-<h1>好き顔9選</h1>
-<div id="app"></div>
+<div class="app">
+  <section id="home" class="hero">
+    <div class="kicker">SUKIGAO 9</div>
+    <h1>RINDO<br>好き顔9選メーカー</h1>
+    <p>RINDO Entertainmentのタレントから、<br>「顔が好き！」と思う9人を直感で選ぼう♡</p>
+    <button class="startbtn" onclick="start()">好き顔9選をはじめる</button>
+    <div class="note">
+      予選では、表示された4人の中から好きな顔を複数選択。<br>
+      その後、候補同士の二択で最終TOP9を決めます。<br>
+      ※非公式のファン制作サイトです。
+    </div>
+  </section>
+
+  <section id="prelim" class="panel hidden">
+    <div class="topbar"><span class="step" id="preStep"></span><span class="counter" id="preCounter"></span></div>
+    <div class="progress"><i id="preProgress"></i></div>
+    <h2>この中で好きな顔を選んでね</h2>
+    <p class="sub">複数選択OK。深く考えず、直感でどうぞ♡</p>
+    <div id="preGrid" class="grid"></div>
+    <div class="actions">
+      <button id="preNext" class="nextbtn" onclick="nextPrelim()">次へ →</button>
+    </div>
+  </section>
+
+  <section id="main" class="panel hidden">
+    <div class="topbar"><span class="step" id="mainStep"></span><span class="counter">完全二択</span></div>
+    <div class="progress"><i id="mainProgress"></i></div>
+    <h2>どっちの顔が好き？</h2>
+    <p class="sub">より好きな方を1人タップしてね。</p>
+    <div id="battle" class="battle"></div>
+  </section>
+
+  <section id="result" class="panel hidden">
+    <div style="text-align:center">
+      <span class="badge">YOUR SUKIGAO 9</span>
+      <h2 style="font-size:26px;margin-top:10px">あなたの好き顔9選 👑</h2>
+      <p class="sub">RINDO Entertainment 好き顔TOP9</p>
+    </div>
+    <div id="finalGrid" class="finalgrid"></div>
+    <div class="sharebox">
+      <button class="sharebtn" onclick="copyResult()">結果テキストをコピー</button>
+      <button class="sharebtn" onclick="restart()">もう一度やる</button>
+      <p id="copyMsg" class="small"></p>
+    </div>
+  </section>
+
+  <div class="footer">
+    掲載候補：RINDO Entertainment公式タレントページ掲載の現役タレント<br>
+    同名の兼任メンバーは1人に統合。「ゆき」は候補から除外しています。<br>
+    画像はRINDO Entertainment公式サイト掲載画像を参照しています。
+  </div>
 </div>
+
 <script>
-const NAMES=["なめ", "つばき", "うと", "ないち", "りう", "りんたろ。", "はく", "みお", "けん", "えつや", "ふゆみ", "かなめ", "あむ", "さく", "しょうた", "きょうへい", "らいと", "はやと", "とあ", "ねる", "うみ", "らん", "そう", "たく", "めあ", "ひろ", "てん", "さくら", "ゆそん", "たいよう", "はやて", "りょう", "さつき", "たろ", "こうた", "はも", "せな", "伊藤。", "けい", "こむぎ", "あゆむ", "はると", "みなと", "ゆうま", "ゆたか", "いぶき", "ふうま", "たいちん", "ひかる", "だいち", "あさひ", "こんちゃん", "みやび", "かい", "やまだ", "つかさ", "なお", "うた", "あとむ", "しき", "ひゅうが", "あらた", "りき", "じん", "うぃる", "つばさ", "なぎさ", "フマル", "りゅうせい", "あかね", "りお", "なつ", "禊", "タイ・マイ", "梅", "なつめ", "よきき", "りゅーと", "かぐや", "れお", "あさと", "しの", "そらん"];
-let state={screen:"intro",pool:[],round:0,queue:[],wins:{},result:[]};
-const app=document.getElementById("app");
-function esc(s){return s.replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]));}
-function avatar(name,mini=false){return `<div class="${mini?'mini':'avatar'}">${esc(name.slice(0,1))}</div>`}
-function shuffle(a){a=[...a];for(let i=a.length-1;i>0;i--){let j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
-function intro(){
-state.screen="intro";app.innerHTML=`<div class="card"><p><b>RINDOの中から「好きな顔」を9人選ぼう！</b></p><p class="note">予選では気になる人を何人選んでもOK。最低9人選ぶと本戦へ進めます。</p><button onclick="startSelect()">予選をはじめる</button></div>`;
+const PEOPLE = [{"name": "なめ", "image": "https://rindo-entertainment.co.jp/wp-content/uploads/2024/07/97afdb7cbede570525945847aa32ec52-2.jpg"}, {"name": "つばき", "image": "https://rindo-entertainment.co.jp/wp-content/uploads/2024/07/5e76979eceffcb2254427be884743461-2.jpg"}, {"name": "うと", "image": "https://rindo-entertainment.co.jp/wp-content/uploads/2024/07/16c84230292c78af0204cbbaa574f26d-2.jpg"}, {"name": "ないち", "image": "https://rindo-entertainment.co.jp/wp-content/uploads/2024/07/57a89c876cc8ec629402ab60d1f42cda-1.jpg"}, {"name": "りう", "image": "https://rindo-entertainment.co.jp/wp-content/uploads/2024/07/045802bc3739915377f05b7b9b31af9e-1.jpg"}, {"name": "りんたろ。", "image": "https://rindo-entertainment.co.jp/wp-content/uploads/2024/07/028c73983c920d9d3d3ee15c7817114a-1.jpg"}, {"name": "はく", "image": "https://rindo-entertainment.co.jp/wp-content/uploads/2024/07/e963ecdc4c6e2c063b93baedef950687-2.jpg"}, {"name": "みお", "image": "https://rindo-entertainment.co.jp/wp-content/uploads/2024/07/b9c768d96dcc4701d7f59ec69f4b2f3b-2.jpg"}, {"name": "けん", "image": "https://rindo-entertainment.co.jp/wp-content/uploads/2024/07/ed9d2bb6c947c5f02adf67a424fbcaa7-2.jpg"}, {"name": "えつや", "image": "https://rindo-entertainment.co.jp/wp-content/uploads/2021/12/G7Ud-ovaIAATPLT.jpeg"}, {"name": "ふゆみ", "image": "https://rindo-entertainment.co.jp/wp-content/uploads/2021/12/G7uN60dakAAHX4q.jpeg"}, {"name": "かなめ", "image": "https://rindo-entertainment.co.jp/wp-content/uploads/2021/12/G7exKhcbkAAFikx.jpeg"}, {"name": "あむ", "image": "https://rindo-entertainment.co.jp/wp-content/uploads/2021/12/G7pEXvbakAAnuuS.jpeg"}, {"name": "さく", "image": "https://rindo-entertainment.co.jp/wp-content/uploads/2026/03/6a13d84b499e19e7b85eade92755fcb5.jpg"}, {"name": "しょうた", "image": "https://rindo-entertainment.co.jp/wp-content/uploads/2026/03/6c3a2dda8f2ec41b5b65ea096f7d613d.jpg"}, {"name": "きょうへい", "image": "https://rindo-entertainment.co.jp/wp-content/uploads/2026/03/874a63e6bbffeaa6b99968aa2a67c0b4.jpg"}, {"name": "らいと", "image": "https://rindo-entertainment.co.jp/wp-content/uploads/2026/03/b3aefaf5e4a3bc41e9de384522ca5dd7.jpg"}, {"name": "はやと", "image": "https://rindo-entertainment.co.jp/wp-content/uploads/2026/03/44719c23d489f9c298a19d5caac02908.jpg"}, {"name": "とあ", "image": "https://rindo-entertainment.co.jp/wp-content/uploads/2023/11/1fed321307b8baf2db84e5c74dc84db2.jpg"}, {"name": "ねる", "image": "https://rindo-entertainment.co.jp/wp-content/uploads/2026/06/512607b18cdc8576b2b06026d0d0db1c.jpg"}, {"name": "うみ", "image": "https://rindo-entertainment.co.jp/wp-content/uploads/2023/11/638fd4d88b4ce03c187cef260a8a6de8.jpg"}, {"name": "らん", "image": "https://rindo-entertainment.co.jp/wp-content/uploads/2026/06/0c8c17a0af9e53a162d35c323f95f5f7.jpg"}, {"name": "そう", "image": "https://rindo-entertainment.co.jp/wp-content/uploads/2023/11/04e048c7d07384e5f092e70824cc7d9f.jpg"}, {"name": "たく", "image": "https://rindo-entertainment.co.jp/wp-content/uploads/2026/06/4e49537858f76a53c885fb2360d67d80.jpg"}, {"name": "めあ", "image": "https://rindo-entertainment.co.jp/wp-content/uploads/2023/11/06de70f470c25e10ec88f416106f28a2.jpg"}, {"name": "ひろ", "image": "https://rindo-entertainment.co.jp/wp-content/uploads/2026/06/01c6ecc690fe39768e772941a52f5990.jpg"}, {"name": "てん", "image": "https://rindo-entertainment.co.jp/wp-content/uploads/2024/11/54aa63625afdccb61954f971b75e3920.jpg"}, {"name": "さくら", "image": "https://rindo-entertainment.co.jp/wp-content/uploads/2024/01/61f621170d1ab0f690d42187f417a0f3-1.jpg"}, {"name": "ゆそん", "image": "https://rindo-entertainment.co.jp/wp-content/uploads/2024/01/c15ffd6bc2d623bb7767e8a6e2a842c4-1.jpg"}, {"name": "たいよう", "image": "https://rindo-entertainment.co.jp/wp-content/uploads/2024/01/3c27de50a7dd0410d804582582b58281-1.jpg"}, {"name": "はやて", "image": "https://rindo-entertainment.co.jp/wp-content/uploads/2024/01/7bdb2be1ee8fe70a5e437a48b6a8fc1b-1.jpg"}, {"name": "りょう", "image": "https://rindo-entertainment.co.jp/wp-content/uploads/2024/01/3eaad19aa11d746fc39adc029b36320e-1.jpg"}, {"name": "さつき", "image": "https://rindo-entertainment.co.jp/wp-content/uploads/2024/06/0d7d7c202b108612a85522a82ec80ace.jpg"}, {"name": "たろ", "image": "https://rindo-entertainment.co.jp/wp-content/uploads/2024/06/bcb4e95fd910055ad936629937f098e6.jpg"}, {"name": "こうた", "image": "https://rindo-entertainment.co.jp/wp-content/uploads/2024/06/1b1dc6845221998ac1a5fcc493b5e9b7.jpg"}, {"name": "はも", "image": "https://rindo-entertainment.co.jp/wp-content/uploads/2024/07/845af3d861909db4370e7bd5dd140cb2.jpg"}, {"name": "せな", "image": "https://rindo-entertainment.co.jp/wp-content/uploads/2024/07/28bc7d80693fc36c83c74e94feb98712.jpg"}, {"name": "伊藤。", "image": "https://rindo-entertainment.co.jp/wp-content/uploads/2024/07/1852ade3a18b885318ae1c0c40725f16.jpg"}, {"name": "けい", "image": "https://rindo-entertainment.co.jp/wp-content/uploads/2024/07/00d17e97cd0d1ff4b3e9d312cbbed134.jpg"}, {"name": "こむぎ", "image": "https://rindo-entertainment.co.jp/wp-content/uploads/2024/07/cfcffa4c8e6e6a2f9e5eeac5b85054eb.jpg"}, {"name": "あゆむ", "image": "https://rindo-entertainment.co.jp/wp-content/uploads/2024/07/2551a472de23915e443ca33859476ee9.jpg"}, {"name": "はると", "image": "https://rindo-entertainment.co.jp/wp-content/uploads/2024/07/131a9ae14529445cd7c5d7fe35acd7e1.jpg"}, {"name": "みなと", "image": "https://rindo-entertainment.co.jp/wp-content/uploads/2024/07/d667318b1758fc60c5ba3b0eb3a76cb9.jpg"}, {"name": "ゆうま", "image": "https://rindo-entertainment.co.jp/wp-content/uploads/2025/09/9e145b5136cff986c2c8dfcd18c9bce2.jpg"}, {"name": "ゆたか", "image": "https://rindo-entertainment.co.jp/wp-content/uploads/2025/09/aa7b9b822ca722f4bef408f2f33fd2f1.jpg"}, {"name": "いぶき", "image": "https://rindo-entertainment.co.jp/wp-content/uploads/2025/09/ac61fde65162e0c8932638710ccd4bb4.jpg"}, {"name": "ふうま", "image": "https://rindo-entertainment.co.jp/wp-content/uploads/2025/09/794c26b718fe4534db611b89216f718f.jpg"}, {"name": "たいちん", "image": "https://rindo-entertainment.co.jp/wp-content/uploads/2025/09/8e644cd36d622a850c026be691920f56.jpg"}, {"name": "ひかる", "image": "https://rindo-entertainment.co.jp/wp-content/uploads/2025/09/aa953beb6ab3cb039e415a1d8adbd5c9.jpg"}, {"name": "だいち", "image": "https://rindo-entertainment.co.jp/wp-content/uploads/2025/09/47d457877403ae5467d724a74a33285f.jpg"}, {"name": "あさひ", "image": "https://rindo-entertainment.co.jp/wp-content/uploads/2025/09/f4f55f5ea4dfe5133a7fa8177f74d4fd.jpg"}, {"name": "こんちゃん", "image": "https://rindo-entertainment.co.jp/wp-content/uploads/2025/09/c049f36ae85f2f761a0bdd110d85f8ee.jpg"}, {"name": "みやび", "image": "https://rindo-entertainment.co.jp/wp-content/uploads/2026/06/9b6f619bc83bf3d478ea465fca67d25a.jpg"}, {"name": "かい", "image": "https://rindo-entertainment.co.jp/wp-content/uploads/2026/06/ceecfc5e35cc78b4ce1ca7eb5015bc7d.jpg"}, {"name": "やまだ", "image": "https://rindo-entertainment.co.jp/wp-content/uploads/2026/06/ce866bef79d5e6e67f5e1f348419d219.jpg"}, {"name": "つかさ", "image": "https://rindo-entertainment.co.jp/wp-content/uploads/2026/06/ab8e8314c2a5c9cf1e53126a33a2b7f5.jpg"}, {"name": "なお", "image": "https://rindo-entertainment.co.jp/wp-content/uploads/2025/12/31b0c4aa9ea3acf25f5391091705d878.jpeg"}, {"name": "うた", "image": "https://rindo-entertainment.co.jp/wp-content/uploads/2025/12/904f6494cd1160099164601e412caece.jpg"}, {"name": "あとむ", "image": "https://rindo-entertainment.co.jp/wp-content/uploads/2025/12/4eed3b23b897aaf2500d064133f58626.jpeg"}, {"name": "しき", "image": "https://rindo-entertainment.co.jp/wp-content/uploads/2025/12/11a02aa1cd05901ab87e4f1f8577a597.jpeg"}, {"name": "ひゅうが", "image": "https://rindo-entertainment.co.jp/wp-content/uploads/2025/12/1e6563ec9cafc2dd03a7716c71d1b508.jpeg"}, {"name": "あらた", "image": "https://rindo-entertainment.co.jp/wp-content/uploads/2025/12/ee541807dbfd109822bd17af5d575818.jpg"}, {"name": "りき", "image": "https://rindo-entertainment.co.jp/wp-content/uploads/2025/12/1d325d9b2ad28e8accb784504b435021.jpg"}, {"name": "じん", "image": "https://rindo-entertainment.co.jp/wp-content/uploads/2026/01/525a6480255b62a2d8474a3f44ee5c70.jpg"}, {"name": "うぃる", "image": "https://rindo-entertainment.co.jp/wp-content/uploads/2026/01/e7e39e0fe536830e373b4142c1bfcae2.jpg"}, {"name": "つばさ", "image": "https://rindo-entertainment.co.jp/wp-content/uploads/2026/01/ce32d103f1dce5a7d0e9eba7c31515e6.jpg"}, {"name": "なぎさ", "image": "https://rindo-entertainment.co.jp/wp-content/uploads/2026/01/71fc88350755956a7a03eba798471a8e.jpg"}, {"name": "フマル", "image": "https://rindo-entertainment.co.jp/wp-content/uploads/2026/01/b5817b80b38aaa38029bc3f814d8b723.jpg"}, {"name": "りゅうせい", "image": "https://rindo-entertainment.co.jp/wp-content/uploads/2026/07/UnTitle_RYUSEI.jpg"}, {"name": "あかね", "image": "https://rindo-entertainment.co.jp/wp-content/uploads/2026/07/UnTitle_AKANE.jpg"}, {"name": "りお", "image": "https://rindo-entertainment.co.jp/wp-content/uploads/2026/07/UnTitle_RIO.jpg"}, {"name": "なつ", "image": "https://rindo-entertainment.co.jp/wp-content/uploads/2026/07/UnTitle_NATSU.jpg"}, {"name": "禊", "image": "https://rindo-entertainment.co.jp/wp-content/uploads/2026/09/413a4e9aeb56b757c23382dfa3a1a1cd.jpg"}, {"name": "タイ・マイ", "image": "https://rindo-entertainment.co.jp/wp-content/uploads/2026/09/868fd6931f97dde33e896e1a918e4034.jpg"}, {"name": "梅", "image": "https://rindo-entertainment.co.jp/wp-content/uploads/2026/09/18db267123ff54b809538bc3599a733f.jpg"}, {"name": "なつめ", "image": "https://rindo-entertainment.co.jp/wp-content/uploads/2026/09/cab3d41d6708d5afd31dab7d7c4ee733.jpg"}, {"name": "よきき", "image": "https://rindo-entertainment.co.jp/wp-content/uploads/2026/09/cc4ad2392d641e8b79b6a811bcc9c8ae.jpg"}, {"name": "りゅーと", "image": "https://rindo-entertainment.co.jp/wp-content/uploads/2026/09/2_ryuto.jpg"}, {"name": "かぐや", "image": "https://rindo-entertainment.co.jp/wp-content/uploads/2026/09/3_kaguya.jpg"}, {"name": "れお", "image": "https://rindo-entertainment.co.jp/wp-content/uploads/2026/09/4_reo.jpg"}, {"name": "あさと", "image": "https://rindo-entertainment.co.jp/wp-content/uploads/2026/09/5_asato.jpg"}, {"name": "しの", "image": "https://rindo-entertainment.co.jp/wp-content/uploads/2026/09/6_shino.jpg"}, {"name": "そらん", "image": "https://rindo-entertainment.co.jp/wp-content/uploads/2026/09/632efed523cf169f69d37da13b183373.jpg"}];
+const STORAGE_KEY = "rindo_sukigao9_v1";
+let state = {stage:"home", order:[], preIndex:0, scores:{}, selected:[], finalists:[], battles:[], battleIndex:0, wins:{}};
+
+function save(){try{localStorage.setItem(STORAGE_KEY,JSON.stringify(state));}catch(e){}}
+function clearSave(){try{localStorage.removeItem(STORAGE_KEY);}catch(e){}}
+function shuffle(a){
+  const x=a.slice();
+  for(let i=x.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[x[i],x[j]]=[x[j],x[i]];}
+  return x;
 }
-function startSelect(){state.screen="select";state.pool=[];renderSelect(0);}
-function renderSelect(page){
-let start=page*10, list=NAMES.slice(start,start+10);
-app.innerHTML=`<div class="card"><div class="note">予選 ${page+1} / ${Math.ceil(NAMES.length/10)}</div><div class="grid">${list.map((n,i)=>`<div class="person ${state.pool.includes(n)?'sel':''}" onclick="toggle(${start+i})">${avatar(n)}<div class="name">${esc(n)}</div></div>`).join("")}</div><div class="count">現在 ${state.pool.length}人選択中</div>${start+10<NAMES.length?`<button onclick="renderSelect(${page+1})">次へ</button>`:`<button onclick="beginMain()">このメンバーで本戦へ</button>`}</div>`;
+function person(name){return PEOPLE.find(p=>p.name===name);}
+function show(id){document.querySelectorAll("section").forEach(s=>s.classList.add("hidden"));document.getElementById(id).classList.remove("hidden");window.scrollTo({top:0,behavior:"smooth"});}
+function start(){
+  state={stage:"prelim",order:shuffle(PEOPLE.map(p=>p.name)),preIndex:0,scores:{},selected:[],finalists:[],battles:[],battleIndex:0,wins:{}};
+  PEOPLE.forEach(p=>state.scores[p.name]=0);
+  save(); show("prelim"); renderPrelim();
 }
-function toggle(i){let n=NAMES[i],k=state.pool.indexOf(n);k>=0?state.pool.splice(k,1):state.pool.push(n);renderSelect(Math.floor(i/10));}
-function beginMain(){
-if(state.pool.length<9){alert("9人以上選んでね！");return}
-state.wins={};state.pool.forEach(n=>state.wins[n]=0);
-let p=shuffle(state.pool), q=[];
-for(let r=0;r<3;r++){let a=shuffle(p);for(let i=0;i<a.length-1;i+=2)q.push([a[i],a[i+1]]);if(a.length%2)q.push([a[a.length-1],a[0]]);}
-state.queue=q;state.round=0;state.screen="main";renderMain();
+function renderPrelim(){
+  const total=Math.ceil(state.order.length/4);
+  const start=state.preIndex*4;
+  const group=state.order.slice(start,start+4);
+  state.selected=[];
+  document.getElementById("preStep").textContent=`予選 ${state.preIndex+1} / ${total}`;
+  document.getElementById("preCounter").textContent=`${Math.min(start+4,state.order.length)} / ${state.order.length}人`;
+  document.getElementById("preProgress").style.width=((state.preIndex+1)/total*100)+"%";
+  const grid=document.getElementById("preGrid");
+  grid.innerHTML=group.map(n=>cardHTML(person(n),false)).join("");
+  document.getElementById("preNext").textContent=state.preIndex===total-1?"予選を終了 →":"次へ →";
 }
-function renderMain(){
-if(!state.queue.length)return finish();
-let pair=state.queue.shift(), done=state.round+1,total=state.round+1+state.queue.length;state.current=pair;state.round++;
-app.innerHTML=`<div class="card"><div class="note">本戦 ${done}回目</div><div class="progress"><div class="bar" style="width:${Math.min(100,done/total*100)}%"></div></div><p style="text-align:center;font-weight:800">どっちの顔が好き？</p><div class="choice">${pair.map(n=>`<button onclick="vote('${encodeURIComponent(n)}')">${avatar(n)}<br><b>${esc(n)}</b></button>`).join("")}</div></div>`;
+function cardHTML(p,selected){
+  return `<button class="card ${selected?"selected":""}" data-name="${escapeAttr(p.name)}" onclick="toggleCard(this)">
+    <img src="${p.image}" alt="${escapeAttr(p.name)}" loading="lazy" onerror="this.style.background='#eee';this.removeAttribute('src')">
+    <span class="check">✓</span><div class="name">${escapeHTML(p.name)}</div>
+  </button>`;
 }
-function vote(x){let n=decodeURIComponent(x);state.wins[n]++;renderMain();}
+function toggleCard(el){
+  const n=el.dataset.name;
+  if(state.selected.includes(n)){state.selected=state.selected.filter(x=>x!==n);el.classList.remove("selected");}
+  else{state.selected.push(n);el.classList.add("selected");}
+}
+function nextPrelim(){
+  state.selected.forEach(n=>state.scores[n]=(state.scores[n]||0)+1);
+  const total=Math.ceil(state.order.length/4);
+  if(state.preIndex<total-1){state.preIndex++;save();renderPrelim();return;}
+  buildFinalists();
+}
+function buildFinalists(){
+  const sorted=state.order.slice().sort((a,b)=>state.scores[b]-state.scores[a] || Math.random()-.5);
+  state.finalists=sorted.slice(0,18);
+  state.wins={}; state.finalists.forEach(n=>state.wins[n]=0);
+  state.battles=[];
+  const shuffled=shuffle(state.finalists);
+  for(let i=0;i<shuffled.length;i+=2) state.battles.push([shuffled[i],shuffled[i+1]]);
+  state.battleIndex=0;state.stage="main";save();show("main");renderBattle();
+}
+function renderBattle(){
+  const total=state.battles.length;
+  const pair=state.battles[state.battleIndex];
+  document.getElementById("mainStep").textContent=`本選 ${state.battleIndex+1} / ${total}`;
+  document.getElementById("mainProgress").style.width=((state.battleIndex+1)/total*100)+"%";
+  document.getElementById("battle").innerHTML=pair.map(n=>`<button class="card" onclick="chooseBattle('${escapeJS(n)}')">${imgHTML(person(n))}<div class="name">${escapeHTML(n)}</div></button>`).join("");
+}
+function chooseBattle(n){
+  state.wins[n]=(state.wins[n]||0)+1;
+  state.battleIndex++;
+  if(state.battleIndex<state.battles.length){save();renderBattle();return;}
+  finish();
+}
 function finish(){
-state.result=Object.entries(state.wins).sort((a,b)=>b[1]-a[1]||Math.random()-.5).slice(0,9).map(x=>x[0]);
-state.screen="result";app.innerHTML=`<div class="card"><h2 style="margin-top:0">ふうかちゃんのTOP9</h2>${state.result.map((n,i)=>`<div class="rank"><div class="num">${i+1}</div>${avatar(n,true)}<div class="rankname">${esc(n)}</div></div>`).join("")}</div><div class="card"><button onclick="copyResult()">結果をコピー</button><br><br><button class="secondary" onclick="intro()">もう一度やる</button></div><p class="note">※現在は写真なしでも動作確認できるプロトタイプです。写真は後から追加できる形にしてあります。</p>`;
+  const ranked=state.finalists.slice().sort((a,b)=>state.wins[b]-state.wins[a] || state.scores[b]-state.scores[a] || Math.random()-.5);
+  state.result=ranked.slice(0,9);state.stage="result";save();show("result");
+  document.getElementById("finalGrid").innerHTML=state.result.map((n,i)=>{
+    const p=person(n);return `<div class="finalcard"><img src="${p.image}" alt="${escapeAttr(n)}" loading="lazy"><div class="rank">${i+1}位</div><div class="finalname">${escapeHTML(n)}</div></div>`;
+  }).join("");
 }
-async function copyResult(){let t="RINDO 好き顔9選\\n"+state.result.map((n,i)=>`${i+1}. ${n}`).join("\\n");try{await navigator.clipboard.writeText(t);alert("コピーしたよ！")}catch(e){alert(t)}}
-intro();
+function imgHTML(p){return `<img src="${p.image}" alt="${escapeAttr(p.name)}" loading="lazy" onerror="this.removeAttribute('src')">`;}
+function copyResult(){
+  const text="RINDO 好き顔9選\\n"+state.result.map((n,i)=>`${i+1}. ${n}`).join("\\n");
+  if(navigator.clipboard){navigator.clipboard.writeText(text).then(()=>document.getElementById("copyMsg").textContent="コピーしました♡").catch(()=>document.getElementById("copyMsg").textContent=text);}else{document.getElementById("copyMsg").textContent=text;}
+}
+function restart(){clearSave();start();}
+function escapeHTML(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c]));}
+function escapeAttr(s){return escapeHTML(s);}
+function escapeJS(s){return String(s).replace(/\\/g,"\\\\").replace(/'/g,"\\'");}
 </script>
 </body>
 </html>
